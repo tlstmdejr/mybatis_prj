@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="day1224">
+<!-- 컬럼하나에 한행 조회 
+부서번호를 입력( parameteType="int 또는 Integer")받아서 부서명(resultType="String")
+-->
+<select id="scsr" parameterType="int" resultType="String">
+select dname
+from dept
+where deptno=#{deptno}
+</select>
+<!-- 컬럼하나에 여러행 조회 
+ 	부서번호를 입력 (parameterType=int)받아서 부서에속한 모든 사원명(resultType="string"을 검색
+ 	List<string> list=ss.selectlist("아이디",부서번호)
+ 	
+-->
+<select id="scmr" parameterType="int" resultType="String">
+select 	ename
+from 	emp
+where	deptno=#{deptno}
+
+</select>
+<!--컬럼여러개 한행 조회(DTO사용>typeAlias를 사용) 
+	사원번호를 입력받아서 사원명,직무,연봉,입사일,매니저번호,부서번호 검색
+ 	-->
+ <select id="mcsr" parameterType="eDTO" resultType="eDTO">
+ select ename,job,sal,hiredate,mgr,deptno,to_char(hiredate,'yyyy-mm-dd hh24') strHiredate
+ from emp
+ where empno=#{empno}
+ </select>
+ 
+ <!-- 조회 컬럼과 method를 개발자가 수동으로 연결.
+<resultMap>
+-->
+<resultMap type="eDTO" id="eDtoResult">
+<result column="empno" property="empno"/>
+<result column="ename" property="ename"/>
+<result column="job" property="job"/>
+<result column="sal" property="sal"/>
+<result column="hiredate" property="hiredate"/>
+<result column="mgr" property="mgr"/>
+<result column="deptno" property="deptno"/>
+<result column="strHiredate" property="strHiredate"/>
+</resultMap>
+ 
+<!-- 컬럼여러개 여러행 조회 -->
+ <select id="mcmr" parameterType="Integer" resultMap="eDtoResult">
+ select empno,ename,job,sal,hiredate,mgr,deptno,to_char(hiredate,'yyyy-mm-dd hh24') strHiredate
+ from emp
+ where deptno=#{empno}
+ </select>
+<!-- like -->
+<!-- >작다 -->
+<!-- <크다 -->
+<!-- subquery  -->
+<!-- union  -->
+<!-- join  -->
+<!-- subquery&join  -->
+<!-- $의사용  -->
+<!-- dynamic query : if -->
+<!-- dynamic query : choose -->
+<!-- dynamic query : forEach -->
+<!-- dynamic query : set -->
+<!-- PL/SQL insert, update, delete, cursor -->
+
+</mapper>
