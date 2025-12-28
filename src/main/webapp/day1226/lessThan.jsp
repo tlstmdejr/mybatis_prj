@@ -1,15 +1,18 @@
+<%@page import="day1226.SelectService2"%>
+<%@page import="day1226.EmpDomain"%>
 <%@page import="day1224.EmpDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="day1224.SelectService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!-- <style type="text/css">
 body{
 	color:#000;
 }
 </style> -->
-<h2>컬럼 여러개에 여러행 조회</h2>
+<h2>작다의 조회</h2>
 
 <script type="text/javascr                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ipt">
 	$(function() {
@@ -19,30 +22,29 @@ body{
 		});//click
 	});//ready
 </script>
+입력한 연봉보다 적게받는 사원을 검색
 <form name="frm" id="frm" action="index.jsp">
 	<input type="hidden" name="url" value="${param.url }" />
-	<label for="deptno">부서번호</label> 
-	<input type="text" name="deptno" />
+	<label for="sal">연봉</label> 
+	<input type="text" name="sal" />
 	<input	type="button" value="검색" class="btn btn-info btn-sm" id="btn" />
 </form>
 <div id="output">
-	<c:if test="${not empty param.deptno}">
+	<c:if test="${not empty param.sal}">
 		<%
-	String deptno = request.getParameter( "deptno");
-	SelectService ss =SelectService.getInstance();
-	List<EmpDTO> empList = ss.mcmr(Integer.parseInt(deptno));
+	String sal = request.getParameter( "sal");
+	SelectService2 ss2 =SelectService2.getInstance();
+	List<EmpDomain> empList = ss2.lessThan(Integer.parseInt(sal));
 	pageContext.setAttribute("empList", empList);
 %>
-		<c:out value="${ param.deptno }" />번 부서사원 리스트<br>
+		<c:out value="${ param.sal }" />보다 적게 수령하는 사원 리스트<br>
 		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th>번호</th>
 					<th>사원명</th>
 					<th>연봉</th>
-					<th>직무</th>
-					<th>매니저번호</th>
-					<th>부서번호</th>
+					<th>보너스</th>
 					<th>입사일</th>
 				</tr>
 			</thead>
@@ -57,11 +59,9 @@ body{
 					<tr>
 						<td><c:out value="${i.count }" /></td>
 						<td><c:out value="${emp.ename }" /></td>
-						<td><c:out value="${emp.job }" /></td>
 						<td><c:out value="${emp.sal }" /></td>
-						<td><c:out value="${emp.mgr }" /></td>
-						<td><c:out value="${emp.deptno }" /></td>
-						<td><c:out value="${emp.hiredate }" /></td>
+						<td><c:out value="${emp.comm }" /></td>
+						<td><fmt:formatDate value="${emp.hiredate }" pattern="yyyy-MM-dd EEEE"/></td>
 					</tr>
 				</c:forEach>
 			</tbody>
