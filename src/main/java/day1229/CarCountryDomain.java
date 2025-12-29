@@ -1,13 +1,13 @@
-package kr.co.sist.car;
+package day1229;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
 @Setter
+@Getter
 @ToString
-public class CarMakerDomain {
-	private String maker,model;
+public class CarCountryDomain {
+	private String country,maker;
 }
 //class

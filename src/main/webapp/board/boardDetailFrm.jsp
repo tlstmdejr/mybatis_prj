@@ -1,4 +1,4 @@
-<%@page import="kr.co.sist.board.BoardDTO"%>
+<%@page import="kr.co.sist.board.BoardDomain"%>
 <%@page import="kr.co.sist.board.BoardService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>  
@@ -9,16 +9,16 @@ String num=request.getParameter("num");
 if (num != null) {//입력된 번호가 있다면
 	BoardService bs = BoardService.getInstance(); 
 	try {
-			int tempNum=Integer.parseInt(num);
-			Object obj=session.getAttribute(String.valueOf(tempNum));
+	int tempNum=Integer.parseInt(num);
+	Object obj=session.getAttribute(String.valueOf(tempNum));
 		if(obj == null){
-			bs.modifyBoardCnt(tempNum); //세션에 값이 없을 때에만 카운트를 올림.
-			}//end if
-			BoardDTO bDTO=bs.searchOneBoard(tempNum);
+	bs.modifyBoardCnt(tempNum); //세션에 값이 없을 때에만 카운트를 올림.
+	}//end if
+	BoardDomain bDTO=bs.searchOneBoard(tempNum);
 
-			//해당 글번호의 글을 읽었음 저장.
-			session.setAttribute(String.valueOf(tempNum), true);
-			pageContext.setAttribute("bDTO", bDTO);
+	//해당 글번호의 글을 읽었음 저장.
+	session.setAttribute(String.valueOf(tempNum), true);
+	pageContext.setAttribute("bDTO", bDTO);
 	} catch (NullPointerException npe) {
 
 	}

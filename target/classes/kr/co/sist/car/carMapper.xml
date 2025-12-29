@@ -3,9 +3,27 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.sist.car">
-<select id="carMaker" parameterType="String"	resultType="cmkDomain">
-select maker
-from car_country
-where country = #{country} 
+
+<!--제조국에대한 제조사 조회  
+	컬럼하나에 여러행 조회-->
+<select id="selectMaker" parameterType="String" resultType="String">
+select	maker
+from	car_country
+where	country=#{country}
 </select>
+<!--제조사에대한 모델명 조회 
+	 -->
+<select id="selectModel" parameterType="String" resultType="String">
+select	model
+from	car_maker
+where	maker=#{maker}
+</select>
+
+<!--모델명에대한 모든 차량의 이미지,년식,가격,배기량,입력일 조회  -->
+<select id="selectCar" parameterType="String" resultType="cmoDomain">
+select	car_img,car_year,price,car_option,cc,hiredate
+from	car_model
+where	model=#{model}
+</select>
+
 </mapper>

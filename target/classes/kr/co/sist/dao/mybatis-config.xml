@@ -3,38 +3,42 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-<properties resource="properties/database.properties">
-</properties>
-<typeAliases >
-	<typeAlias type="day1224.EmpDTO" alias="eDTO"/>
-	<typeAlias type="day1226.EmpDTO" alias="empDTO"/>
-	<typeAlias type="day1226.EmpDomain" alias="empDomain"/>
-	<!--우편번호 검색결과를 저상할 domain   -->
-	<typeAlias type="day1226.ZipcodeDomain" alias="zipDomain"/>
-	<typeAlias type="day1226.EmpAllDomain" alias="eaDomain"/>
-	<!--제조사 모델명 년식 가격 옵션 배기량 이미지 입력일을 저장할 domain  -->
-	<typeAlias type="day1226.CarModelDomain" alias="cmoDomain"/>
-	<typeAlias type="kr.co.sist.car.CarMakerDomain" alias="cmkDomain"/>
-	
-</typeAliases>
-  <environments default="development">
-    <environment id="development">
-      <transactionManager type="JDBC"/>
-      <dataSource type="POOLED">
-        <property name="driver" value="${driver}"/>
-        <property name="url" value="${url}"/>
-        <property name="username" value="${id}"/>
-        <property name="password" value="${pass}"/>
-      </dataSource>
-    </environment>
-  </environments>
-  <mappers>
-    <mapper resource="day1219/dept.xml"/>
-    <mapper resource="day1223/examMapper.xml"/><!--insert연습  -->
-    <mapper resource="day1224/examMapper2.xml"/><!--update,delete연습  -->
-    <mapper resource="day1224/examMapper3.xml"/><!--select연습  -->
-    <mapper resource="day1226/examMapper4.xml"/><!--sql연습  -->
-    <mapper resource="kr/co/sist/car/carMapper.xml"/><!--차  -->
-    <mapper resource="kr/co/sist/board/boardMapper.xml"/>
-  </mappers>
+	<properties resource="properties/database.properties">
+	</properties>
+	<typeAliases>
+		<typeAlias type="day1224.EmpDTO" alias="eDTO" />
+		<typeAlias type="day1226.EmpDTO" alias="empDTO" />
+		<typeAlias type="day1226.EmpDomain" alias="empDomain" />
+		<!--우편번호 검색결과를 저상할 domain -->
+		<typeAlias type="day1226.ZipcodeDomain" alias="zipDomain" />
+		<typeAlias type="day1226.EmpAllDomain" alias="eaDomain" />
+		<!--제조사 모델명 년식 가격 옵션 배기량 이미지 입력일을 저장할 domain -->
+		<typeAlias type="day1226.CarModelDomain" alias="cmoDomain" />
+		<typeAlias type="kr.co.sist.board.BoardDomain"
+			alias="boardDomain" />
+		<typeAlias type="kr.co.sist.board.RangeDTO"
+			alias="rangeDTO" />
+
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${id}" />
+				<property name="password" value="${pass}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="day1219/dept.xml" />
+		<mapper resource="day1223/examMapper.xml" /><!--insert연습 -->
+		<mapper resource="day1224/examMapper2.xml" /><!--update,delete연습 -->
+		<mapper resource="day1224/examMapper3.xml" /><!--select연습 -->
+		<mapper resource="day1226/examMapper4.xml" /><!--sql연습 -->
+		<mapper resource="day1229/examMapper5.xml" /><!--sql연습 -->
+		<mapper resource="kr/co/sist/board/boardMapper.xml" />
+		<mapper resource="kr/co/sist/car/carMapper.xml" /><!--자동차업무 -->
+	</mappers>
 </configuration>

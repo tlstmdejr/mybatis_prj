@@ -6,11 +6,6 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
 import day1226.CarModelDomain;
-import day1226.EmpAllDomain;
-import day1226.EmpDTO;
-import day1226.EmpDomain;
-import day1226.SelectDAO2;
-import day1226.ZipcodeDomain;
 import kr.co.sist.dao.MyBatisHandler;
 
 public class CarDAO {
@@ -26,20 +21,45 @@ public class CarDAO {
 		return cDAO;
 	}// getInstance
 
-	public List<CarMakerDomain> carMaker(String country) throws PersistenceException {
-		List<CarMakerDomain> carList=null;
-		
+	/**
+	 * 제조국에따른 제조사 검색
+	 * @param country
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<String> selectMaker(String country) throws PersistenceException{
+		List<String> makerList=null;
 		SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
-		carList = ss.selectList("kr.co.sist.car.carMaker", country);
+		makerList = ss.selectList("kr.co.sist.car.selectMaker", country);
 		
 		if (ss != null) {
 			ss.close();
 		}
-		return carList;
 		
-	}// carMaker
-
-	
+		return makerList;
+	}
+	public List<String> selectModel(String maker) throws PersistenceException{
+		List<String> modelList=null;
+		SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
+		modelList = ss.selectList("kr.co.sist.car.selectModel", maker);
+		
+		if (ss != null) {
+			ss.close();
+		}
+		
+		return modelList;
+	}
+	public List<CarModelDomain> selectCar(String model) throws PersistenceException{
+		List<CarModelDomain> modelList=null;
+		SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
+		modelList = ss.selectList("kr.co.sist.car.selectCar", model);
+		
+		if (ss != null) {
+			ss.close();
+		}
+		
+		return modelList;
+	}
 }
 //class
 
