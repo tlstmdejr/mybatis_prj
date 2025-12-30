@@ -1,33 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.sist.board">
-<insert id="insertBoard" parameterType="boardDomain">
-<!--board 테이블에 추가작업  -->
-insert into board(num,title,content,ip,id) values(seq_board.nextval,#{title},#{content},#{ip},#{id})
-</insert>
 
-<select id="selectBoardTotalCnt" parameterType="rangeDTO" resultType="int">
-select count(*) cnt from board
-<where>
-	<if test="keyword neq null and keyword neq ''">
-		instr(${fieldStr}, #{keyword}) != 0
-	</if>
-</where>
-</select>
-
-<select id="selectRangeBoard" parameterType="rangeDTO" resultType="boardDomain">
-select num, title, input_date, cnt, id
-from(select num, title, input_date, cnt,id,
-row_number() over( order by input_date desc) rnum
-from board
-<where>
-<if test="keyword neq null and keyword neq ''">
-instr( ${fieldStr}, #{ keyword } ) != 0
-</if>
-</where>
-)where rnum between #{ startNum } and #{ endNum }
-
-</select>
+<!-- board테이블에 추가 작업 -->
+  <insert id="insertBoard" parameterType="boardDTO">
+  insert into board(num, title,content,ip,id)values
+  	( seq_board.nextval,#{title}, #{content}, #{ip}, #{id} )
+  </insert>
+  
+  <select id="selectBoardTotalCnt" parameterType="rangeDTO" resultType="int">
+  select count(*) cnt from board
+  <where>
+  	<if test="keyword neq null and keyword neq ''">
+  		instr( ${fieldStr}, #{ keyword } ) != 0
+  	</if>
+  </where>
+  </select>
+  
+  <select id="selectRangeBoard" parameterType="rangeDTO" resultType="boardDomain">
+  
+  select  num, title, input_date,cnt,id	
+	from	(	select  num, title, input_date, cnt, id,		
+				row_number() over( order by input_date desc) rnum
+				from		board	
+				<where>
+			  	<if test="keyword neq null and keyword neq ''">
+			  		instr( ${fieldStr}, #{ keyword } ) != 0
+			  	</if>
+			  	</where>
+	) where rnum between #{ startNum }  and #{ endNum }
+  </select>
+  
+  <!-- 글번호를 받아서 해당하는 글 하나를 검색.  -->
+  <select id="selectBoardDetail" parameterType="int" resultType="boardDomain">
+ 	select title, content, input_date, ip, cnt, id	
+	from board										
+	where num = #{num}
+  </select>
+  
+  <!-- 글 번호를 받아서 해당 글의 카운트를 증가 -->
+  <update id="updateBoardCnt" parameterType="int">
+  	update	board
+	set		cnt=cnt+1	
+	where num = #{ num }
+  </update>
+ <!-- 글번호와 아이디를 입력받아서 해당 글에 내용과 ip를 변경 -->
+  <update id="updateBoard" parameterType="boardDTO">
+ 	update	board				
+	set		content=#{ content },ip=#{ ip }		
+	where	num=#{ num }	and id=#{ id }
+  </update>
+  
+ <!-- 글번호와 아이디를 입력받아서 해당 글에 삭제 -->
+  <delete id="deleteBoard" parameterType="boardDTO">
+  	delete 	from	board
+	where	num=#{ num }	and id=#{ id }
+  </delete>
 </mapper>
+
+
+
+
+
+
+
+
+
