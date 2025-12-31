@@ -2,7 +2,9 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
 
@@ -11,6 +13,8 @@ import day1226.EmpDomain;
 import day1226.SelectDAO2;
 import day1229.SelectDAO3;
 import day1229.SelectService3;
+import day1231.MemberDTO;
+import day1231.SelectDAO5;
 import kr.co.sist.board.BoardDAO;
 import kr.co.sist.board.RangeDTO;
 import kr.co.sist.car.CarDAO;
@@ -41,9 +45,9 @@ public void test() {
 //CarDAO cDAO=CarDAO.getInstance();
 //EmpDomain ed=sDAO.useDomain(eDTO);
 //assertNotNull(ed);
-///	SelectDAO3 sd3=SelectDAO3.getInstance();
+	SelectDAO5 sd5=SelectDAO5.getInstance();
 //	SelectService3 sc3=SelectService3.getInstance();
-	BoardDAO bDAO=BoardDAO.getInstance();
+//	BoardDAO bDAO=BoardDAO.getInstance();
 try {
 	//assertNotNull(cDAO.selectMaker("수입"));
 //	assertNotNull(cDAO.selectModel("현대"));
@@ -51,21 +55,40 @@ try {
 //	assertNotNull(sd3.dollar("cp_emp5"));
 //	assertNotNull(sd3.dynamicIf(10));
 //	assertNotNull(sc3.dynamicIf(10));
-	RangeDTO rDTO=new RangeDTO();
+//	RangeDTO rDTO=new RangeDTO();
 //	rDTO.setField("1");
 //	rDTO.setKeyword("오늘은");
-	rDTO.setStartNum(1);	
-	rDTO.setEndNum(10);
+//	rDTO.setStartNum(1);	
+//	rDTO.setEndNum(10);
 	//assertNotNull(bDAO.selectBoardTotalCnt(rDTO));
-	assertNotNull(bDAO.selectRangeBoard(rDTO));
+//	assertNotNull(bDAO.selectRangeBoard(rDTO));
+//	MemberDTO mDTO=new MemberDTO()	;
+//	mDTO.setNum(65);
+//	mDTO.setName("rkskek");
+//	mDTO.setAge(25);
+//	mDTO.setGender("남자");
+//	mDTO.setTel("010-5555-5678");
+	
+//	sd5.insertMember(mDTO);
+//	sd5.updateMember(mDTO);
+//	sd5.deleteMember(mDTO);
+//	int cnt=mDTO.getCnt();
+//	assertSame(cnt, 1);
+	HashMap<String, Object> map=new HashMap<String, Object>();
+//	map.put("num", 64);
+	
+//	sd5.selectOneMember(map);
+	sd5.selectAllMember(map);
+	
+	List<Map<String, Object>> data=(List<Map<String, Object>>)map.get("searchAllMember");
+//	System.out.println(data.get(0).get("NAME"));
+	System.out.println(data);
+	assertNotNull(data);
 }catch(Exception e) {
 	e.printStackTrace();
 }
 
 }
 
-private void rDTO(String string) {
-	// TODO Auto-generated method stub
-	
-}
+
 }
